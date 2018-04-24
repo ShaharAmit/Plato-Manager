@@ -1,0 +1,1 @@
+curl --header "Authorization: key=AIzaSyCDt_OZe97vCHfFMEsPtBDaJ8eeBtxLSN8" --header "Content-Type: application/json" -d '{"to": "fDefCBXs_6w:APA91bGzKfAe5lGD5ASgMZvBV55E4Oy5Om89igPa4tAIK31sfOPmqMR0Bj63erplhnY1UHj6dmeBI2RmRf5XBrFbDcyuEFQHO9A41vwyBKAdcqhXakRkanWjT_c4iwAJRnR4v-tFH8wL", "notification": {"titile": "moohoo", "body": "hey"}}' https://fcm.googleapis.com/fcm/send

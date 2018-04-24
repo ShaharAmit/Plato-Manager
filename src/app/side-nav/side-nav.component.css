@@ -1,0 +1,89 @@
+.cont {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#sideBar {
+    width: 240px;
+    height: 100%;
+    background-color: #19212b;
+    float: left;
+    display: none;
+}
+.area {
+    background-color: #ebeff1;
+    min-height: 100%;
+    margin-top: 0;
+    width: auto;
+    overflow: hidden;
+}
+.topBar {
+    background-color: #039be5;
+    width: auto;
+    overflow: hidden;
+    height: 75px;
+
+}
+.logo {
+    background: #404854;
+    height: 75px;
+    border-bottom: #999 1px solid;
+    position: relative;
+    float: left;
+    width: 240px;
+}
+.logoPic{ 
+    background: url("./assets/logo.png") no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    display: block;
+    width: 40%;
+    height: 60%;
+}
+.menuButton {
+    background: url("./assets/menu.png") no-repeat;
+    background-size: contain;
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    display: block;
+    width: 10%;
+    height: 25%;
+    border: none;
+}
+.menuItem {
+    font-size: 1.2rem;
+    text-align: left;
+    width: 100%;
+    height: 30px;
+    margin: 2px 0 2px 0;
+}
+.menuItem a {
+    display: block;
+    color: rgba(255,255,255,.7);
+    padding: 5px;
+    text-decoration: none;
+    margin: 0 0 0 20px;    
+}
+.menuItemSelected a {
+    color: #4fc3f7;
+}
+.menuItemSelected a :hover {
+    color: #4fc3f7;
+}
+.restsCont {
+    padding: 10px 10px 0 0;
+    width: 10%;
+    height: 100;
+    float: right;
+}
+.restsCont label {
+    display: block;
+}
+#rests {
+    appearance: none;
+}
+
+

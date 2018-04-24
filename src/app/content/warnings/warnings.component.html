@@ -1,0 +1,14 @@
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">title</th>
+            <th scope="col">body</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let warning of warnings">
+            <td>{{warning.title}}</td>
+            <td>{{warning.body}}</td>
+        </tr>
+    </tbody>
+</table>

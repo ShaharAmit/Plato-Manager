@@ -1,0 +1,30 @@
+<div class="cont">
+    <div class="logo">
+        <button class="menuButton" (click)="display()"></button>
+        <a href="#" class="logoPic"></a>
+    </div>
+    <div class="topBar">
+        <div class="restsCont">
+            <label for="rests">restaurant</label>
+            <select id="rests" name="rests">
+                <option *ngFor="let rest of this.rests" >
+                    {{rest}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div id="sideBar">
+        <div class="menuItem" routerLinkActive="menuItemSelected">
+            <a class="link"  [routerLink]="['/stock']">stock</a>
+        </div>
+        <div class="menuItem" routerLinkActive="menuItemSelected">
+            <a class="link"  [routerLink]="['/warnings']">warnings</a>
+        </div>
+    </div>
+    <div class="area">
+
+        <router-outlet>
+            <app-content></app-content>
+        </router-outlet>
+    </div>      
+</div>

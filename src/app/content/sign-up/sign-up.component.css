@@ -1,0 +1,12 @@
+.signUpCont {
+    padding-top: 10%;
+    width: 50%;
+    margin: 0 auto;
+    height: auto;
+}
+#signUpHeader {
+    margin-bottom: 30px;
+}
+h2 span {
+    color: red;
+}

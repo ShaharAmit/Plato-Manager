@@ -5,70 +5,73 @@ import '@firebase/firestore';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-let messaging: firebase.messaging.Messaging = null;
-
 @Injectable()
 export class FirebaseService {
   fs: firebase.firestore.Firestore;
   url: string;
   restRoot: string;
+  auth: firebase.auth.Auth;
   private restIDSource = new BehaviorSubject<string>('');
   restID = this.restIDSource.asObservable();
+  uid = null;
+  name = null;
+  messaging: firebase.messaging.Messaging;
 
   constructor(@Inject(FirebaseApp) private firebaseApp: firebase.app.App, private http: HttpClient) {
+    const settings = {timestampsInSnapshots: true};
     this.fs = firebase.firestore(this.firebaseApp);
-    messaging = firebase.messaging(this.firebaseApp);
-    this.getMessaging();
+    this.fs.settings(settings);
+    this.auth = firebase.auth(this.firebaseApp);
+    // this.getMessaging();
     this.url = 'https://us-central1-plato-9a79e.cloudfunctions.net/registerToRest';
     this.restRoot = 'RestAlfa';
+
+    this.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.name = user.displayName;
+        this.uid = user.uid;
+        this.getMessaging();
+      } else {
+        this.messaging = null;
+        this.name = null;
+        this.uid = null;
+      }
+    });
   }
 
-  async getCol(path: string) {
-    const obj: Object[] = [];
-    await this.fs.collection(path)
-      .get()
-      .then(function (data) {
-        data.forEach(docs => {
-          obj.push({'id' : docs.id, 'data' : docs.data()});
-        });
-      }).catch(err => {
-        console.error(err);
-      });
-    return obj;
-  }
-
-  async getDoc(path: string) {
-    const obj: Object[] = [];
-    await this.fs.doc(path)
-      .get()
-      .then(function (data) {
-        obj.push({'data' : data.data()});
-      }).catch(err => {
-        console.error(err);
-      });
-    return obj;
-  }
-  getMessaging() {
-    messaging.usePublicVapidKey('BBGVrxUbxkpVZ34MzaP58YDLSFci9tSq92Qb47LwZx1uPMp6loMpAHk03n1690-M8AJP9f-GS14jPXkTpseZinE');
-    messaging.requestPermission()
-      .then(function() {
+  async getMessaging() {
+    this.messaging = firebase.messaging(this.firebaseApp);
+    await this.messaging.usePublicVapidKey('BBGVrxUbxkpVZ34MzaP58YDLSFci9tSq92Qb47LwZx1uPMp6loMpAHk03n1690-M8AJP9f-GS14jPXkTpseZinE');
+    this.messaging.requestPermission()
+      .then(() => {
         console.log('have permission');
-        return messaging.getToken();
-      }).then(token => {
-        console.log(token);
-        this.http.get(this.url + '?rest=' + this.restID + '&token=' + token).subscribe(data => {
-          console.log(data);
-        });
-      }).catch(err => {
-        console.error(err);
-      });
-      messaging.onMessage(function(payload) {
-        console.log('onMessage', payload);
-      });
+        return this.messaging.getToken();
+      })
+        .then(token => {
+          console.log(token);
+        })
+          .then(() => {
+            this.messaging.onMessage(payload => {
+              console.log('onMessage', payload);
+            });
+          })
+            .catch(err => {
+              console.error(err);
+            });
   }
 
   changeRestID(message: string) {
     this.restIDSource.next(message);
   }
 
+  async firebaseLogin(email, password) {
+    return this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        return firebase.auth().signInWithEmailAndPassword(email, password);
+      })
+        .catch(err => {
+          console.error(err);
+          return false;
+        });
+  }
 }

@@ -1,0 +1,12 @@
+.loginCont {
+    padding-top: 10%;
+    width: 50%;
+    margin: 0 auto;
+    height: auto;
+}
+#loginHeader {
+    margin-bottom: 30px;
+}
+.hidden {
+    display: none;
+}

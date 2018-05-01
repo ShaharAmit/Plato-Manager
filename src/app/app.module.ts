@@ -5,7 +5,7 @@ import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { ContentComponent } from './content/content.component';
 import { StockComponent } from './content/stock/stock.component';
-import {Router, RouterModule, Routes} from '@angular/router';
+import {Router, RouterModule, Routes, CanActivate} from '@angular/router';
 import { FirebaseService } from './services/firebaseService/firebase.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -13,13 +13,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { WarningsComponent } from './content/warnings/warnings.component';
-
-
-const appRouts: Routes = [
-  { path : 'stock', component: StockComponent },
-  { path : 'warnings', component: WarningsComponent}
-] ;
-
+import { AuthGuardService } from './services/auth-guard/auth-guard.service';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { LoginComponent } from './content/login/login.component';
+import { SignUpComponent } from './content/sign-up/sign-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { appRouts } from './routers/router';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,9 @@ const appRouts: Routes = [
     SideNavComponent,
     ContentComponent,
     StockComponent,
-    WarningsComponent
+    WarningsComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +36,13 @@ const appRouts: Routes = [
     AngularFireModule.initializeApp(environment.config),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
     ],
-  providers: [FirebaseService],
+  providers: [FirebaseService, AuthGuardService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
+
+

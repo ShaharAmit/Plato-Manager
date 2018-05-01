@@ -1,0 +1,29 @@
+<div class='loginCont'>
+  <h2 id='loginHeader'></h2>
+  <form #form [ngFormOptions]="{ updateOn: 'change' }" (ngSubmit)="login()">
+    <div class="form-group hidden">
+        <input type="text" class="form-control" id="email" required [(ngModel)]="model.email" name='email' #email="ngModel" placeholder="* Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+            email required in format : example@example.ending
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <input type="password" class="form-control" id="pass" required [(ngModel)]="model.pass" name='pass' #pass="ngModel" placeholder="* Password" pattern="(?=.*\d{1,})(?=.*[a-z]{1,})(?=.*[A-Z]{0,}).{6,12}">
+        <div [hidden]="pass.valid || pass.pristine" class="alert alert-danger">
+            pass required in length of 6-12 charcters and or numbers
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-success hidden" [disabled]="!pass.valid || !email.valid" id='login'>
+        Login
+    </button>
+    <button type="button" class="btn btn-secondary hidden" (click)="signup()" id='signup'>
+        Signup
+    </button>
+    <button type="button" class="btn btn-danger hidden" (click)="logout()" id='logout'>
+        Logout
+    </button>   
+    <button type="button" class="btn btn-secondary hidden" (click)="forgot()" id='forgot'>
+            Forgot pass
+    </button>
+  </form> 
+</div>

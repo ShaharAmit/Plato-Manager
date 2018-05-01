@@ -1,1 +1,18 @@
-<app-side-nav></app-side-nav>
+<div class="cont">
+    <div class="logo">
+        <button class="menuButton holder hidden" (click)="display()"></button>
+        <a href="login" class="logoPic"></a>
+    </div>
+    <div class="topBar">
+        <div class="restsCont holder hidden">
+            <label for="rests">restaurant</label>
+            <select id="rests" name="rests">
+                <option *ngFor="let rest of this.rests">
+                    {{rest}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <app-side-nav class="holder hidden"></app-side-nav>
+    <app-content></app-content>
+</div>

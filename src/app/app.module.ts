@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { ContentComponent } from './content/content.component';
 import { StockComponent } from './content/stock/stock.component';
@@ -14,11 +13,13 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { WarningsComponent } from './content/warnings/warnings.component';
 import { AuthGuardService } from './services/auth-guard/auth-guard.service';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { LoginComponent } from './content/login/login.component';
-import { SignUpComponent } from './content/sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { appRouts } from './routers/router';
+import { CustomersPredComponent } from './content/customers-pred/customers-pred.component';
+
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+
 
 @NgModule({
   declarations: [
@@ -28,9 +29,11 @@ import { appRouts } from './routers/router';
     StockComponent,
     WarningsComponent,
     LoginComponent,
-    SignUpComponent
+    CustomersPredComponent
   ],
   imports: [
+    Ng2GoogleChartsModule,
+
     BrowserModule,
     RouterModule.forRoot(appRouts),
     AngularFireModule.initializeApp(environment.config),

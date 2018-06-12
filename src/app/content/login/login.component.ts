@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   header: HTMLHeadElement;
   formGroup: HTMLCollectionOf<HTMLDivElement>;
   logIn: HTMLButtonElement;
-  signUp: HTMLButtonElement;
   logoOt: HTMLButtonElement;
   forgotPass: HTMLButtonElement;
 
@@ -27,7 +26,6 @@ export class LoginComponent implements OnInit {
     this.header = document.getElementById('loginHeader') as HTMLHeadElement;
     this.formGroup = document.getElementsByClassName('form-group') as HTMLCollectionOf<HTMLDivElement>;
     this.logIn = document.getElementById('login') as HTMLButtonElement;
-    this.signUp = document.getElementById('signup') as HTMLButtonElement;
     this.logoOt = document.getElementById('logout') as HTMLButtonElement;
     this.forgotPass = document.getElementById('forgot') as HTMLButtonElement;
     this.changeState();
@@ -42,14 +40,11 @@ export class LoginComponent implements OnInit {
       this.forgotPass.classList.remove('hidden');
     } else {
       console.log(this.fb.auth.currentUser.uid);
-      this.fb.fs.doc('Users/' + this.fb.auth.currentUser.uid).update({
+      this.fb.fs.doc('GlobWorkers/' + this.fb.auth.currentUser.uid).update({
         name: 'test'
       });
+      console.log(this.fb.uid);
     }
-  }
-
-  signup() {
-    this.router.navigate(['/signUp']);
   }
 
   logout() {
@@ -77,7 +72,6 @@ export class LoginComponent implements OnInit {
         this.formGroup[i].classList.add('hidden');
       }
       this.logIn.classList.add('hidden');
-      this.signUp.classList.add('hidden');
       this.forgotPass.classList.add('hidden');
       this.logoOt.classList.remove('hidden');
     } else {
@@ -86,7 +80,6 @@ export class LoginComponent implements OnInit {
         this.formGroup[i].classList.remove('hidden');
       }
       this.logIn.classList.remove('hidden');
-      this.signUp.classList.remove('hidden');
       this.forgotPass.classList.add('hidden');
       this.logoOt.classList.add('hidden');
     }

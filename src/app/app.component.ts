@@ -7,10 +7,11 @@ import { FirebaseService } from './services/firebaseService/firebase.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  rests: Object[];
+  rest: Object[];
   restsObj;
   restID;
   constructor(private fb: FirebaseService) {
+    this.rest = [];
     this.initRests();
   }
 
@@ -43,11 +44,18 @@ export class AppComponent implements OnInit {
     }
   }
   initRests() {
+    const one = 5;
     const t = this;
-    this.fb.fs.doc('Users/shahar-test')
-      .onSnapshot(data => {
-        t.rests = data.data().rests;
-        t.fb.changeRestID(t.rests[0].toString());
-      });
+    this.fb.auth.onAuthStateChanged(user => {
+        if (user) {
+          this.fb.fs.collection('GlobWorkers/' + this.fb.uid + '/Rest')
+            .get().then( docs => {
+              docs.forEach(doc => {
+                this.rest.push(doc.id);
+                this.fb.changeRestID(this.rest[0].toString());
+              });
+            });
+        }
+    });
   }
 }

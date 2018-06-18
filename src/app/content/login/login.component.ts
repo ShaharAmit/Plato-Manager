@@ -40,9 +40,6 @@ export class LoginComponent implements OnInit {
       this.forgotPass.classList.remove('hidden');
     } else {
       console.log(this.fb.auth.currentUser.uid);
-      this.fb.fs.doc('GlobWorkers/' + this.fb.auth.currentUser.uid).update({
-        name: 'test'
-      });
       console.log(this.fb.uid);
     }
   }
@@ -64,9 +61,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  changeState() {
-    this.fb.auth.onAuthStateChanged(user => {
-      if (user) {
+  async changeState() {
+
+    if (this.fb.name && this.fb.name !== '') {
       this.header.innerHTML = 'Welcome ' + this.fb.name;
       for (let i = 0; i < this.formGroup.length; i++) {
         this.formGroup[i].classList.add('hidden');
@@ -75,14 +72,29 @@ export class LoginComponent implements OnInit {
       this.forgotPass.classList.add('hidden');
       this.logoOt.classList.remove('hidden');
     } else {
-      this.header.innerHTML = 'Welcome, please login: ';
-      for (let i = 0; i < this.formGroup.length; i++) {
-        this.formGroup[i].classList.remove('hidden');
-      }
-      this.logIn.classList.remove('hidden');
-      this.forgotPass.classList.add('hidden');
-      this.logoOt.classList.add('hidden');
+      this.fb.auth.onAuthStateChanged(async user => {
+        if (user) {
+          this.header.innerHTML = 'Welcome ';
+          this.fb.name = await this.fb.fs.doc('GlobWorkers/' + user.uid).get().then(doc => {
+            return doc.data().name;
+          });
+          this.header.innerHTML = 'Welcome ' + this.fb.name;
+          for (let i = 0; i < this.formGroup.length; i++) {
+            this.formGroup[i].classList.add('hidden');
+          }
+          this.logIn.classList.add('hidden');
+          this.forgotPass.classList.add('hidden');
+          this.logoOt.classList.remove('hidden');
+        } else {
+          this.header.innerHTML = 'Welcome, please login: ';
+          for (let i = 0; i < this.formGroup.length; i++) {
+            this.formGroup[i].classList.remove('hidden');
+          }
+          this.logIn.classList.remove('hidden');
+          this.forgotPass.classList.add('hidden');
+          this.logoOt.classList.add('hidden');
+        }
+      });
     }
-    });
   }
 }

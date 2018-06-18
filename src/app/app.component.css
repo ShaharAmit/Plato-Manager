@@ -16,7 +16,7 @@
     border-bottom: #999 1px solid;
     position: relative;
     float: left;
-    width: 240px;
+    width: 300px;
 }
 .logoPic{ 
     background: url("./assets/logo.png") no-repeat;
@@ -54,4 +54,3 @@
     height: 25%;
     border: none;
 }
-

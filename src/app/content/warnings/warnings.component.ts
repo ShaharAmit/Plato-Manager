@@ -20,23 +20,30 @@ export class WarningsComponent implements OnInit {
   async getWarnings() {
     const warnings: Object[] = [];
     // /RestAlfa/kibutz-222/Messages/alfa-1/Messages/5yfGEwRF7Gix7v7HU6oJ
-    await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/Messages')
+    await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/Messages').orderBy('timestamp')
       .get()
-      .then(function (docs) {
+      .then((docs) => {
         docs.forEach(doc => {
           const data = doc.data();
-          console.log(data);
-          warnings.push({'body' : data.body, 'title' : data.title});
+          warnings.push({
+            Title : data.title,
+            Notification : data.body,
+            Type: data.alert,
+            TimeReceived: (new Date(data.timestamp)).toString().substr(0, 15)
+          });
         });
+        console.log(warnings);
       }).catch(err => {
         console.error(err);
       });
     this.warnings = warnings;
-    console.log('warnings', this.warnings);
   }
   async init() {
     await this.fb.restID.subscribe(message => this.restID = message);
     this.getWarnings();
   }
 
+  getImage (type) {
+    return 'url(' + type + ')';
+  }
 }

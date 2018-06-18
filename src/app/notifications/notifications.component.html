@@ -1,0 +1,7 @@
+<div id="notifications">
+  <h6>Predictions and Alerts</h6>
+    <div *ngFor="let notification of notifications" class='notification'>
+        <div class='notification-image' [ngStyle]="{'backgroundImage': getImage(notification.Type)}"></div>
+        <div class='notification-title'>{{notification.Title}}</div>
+    </div>
+</div>

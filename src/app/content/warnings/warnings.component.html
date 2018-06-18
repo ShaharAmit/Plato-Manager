@@ -1,14 +1,21 @@
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">title</th>
-            <th scope="col">body</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let warning of warnings">
-            <td>{{warning.title}}</td>
-            <td>{{warning.body}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="tableCont">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Title</th>
+                <th scope="col">Notification</th>
+                <th scope="col">Time received</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let warning of warnings">
+                <td [ngStyle]="{'backgroundImage': getImage(warning.Type)}"></td>
+                <td>{{warning.Title}}</td>
+                <td>{{warning.Notification}}</td>
+                <td>{{warning.TimeReceived}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

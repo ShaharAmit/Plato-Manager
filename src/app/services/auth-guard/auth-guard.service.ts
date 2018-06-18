@@ -11,7 +11,7 @@ export class AuthGuardService implements CanActivate {
   }
 
   canActivate() {
-    if (this.fb.uid != null) {
+    if (this.fb.hasRest) {
       return true;
     } else {
       this.router.navigate(['/login']);

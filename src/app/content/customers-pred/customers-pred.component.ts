@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../services/firebaseService/firebase.service';
-import { timestamp } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customers-pred',

@@ -1,16 +1,18 @@
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Raw Material</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Unit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let amount of amounts">
-      <td>{{amount.id}}</td>
-      <td>{{amount.amount}}</td>
-      <td>{{amount.unit}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class='stockCont'>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Raw Material</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Unit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let amount of amounts">
+            <td>{{amount.id}}</td>
+            <td>{{amount.amount}}</td>
+            <td>{{amount.unit}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

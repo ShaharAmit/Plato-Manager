@@ -1,0 +1,20 @@
+table {
+    width: 100%;
+    height: auto;
+    margin: 10% 0 0 0;
+}
+
+.tableCont {
+    margin: auto;
+    width: 80%;
+}
+
+th, td{
+    text-align: center;
+}
+
+td:first-child {
+    background-position: center;
+    background-size: 20%;
+    background-repeat: no-repeat;
+}

@@ -22,7 +22,7 @@ export class StockComponent implements OnInit {
     const amounts: Object[] = [];
     await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/WarehouseStock')
       .get()
-      .then(function (docs) {
+      .then((docs) => {
         docs.forEach(doc => {
           const data = doc.data();
           amounts.push({'id' : doc.id, 'amount' : data.value.amount, 'unit' : data.value.unit});

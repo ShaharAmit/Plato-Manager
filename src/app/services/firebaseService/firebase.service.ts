@@ -16,6 +16,7 @@ export class FirebaseService {
   uid = null;
   name = null;
   messaging: firebase.messaging.Messaging;
+  hasRest: Boolean = false;
 
   constructor(@Inject(FirebaseApp) private firebaseApp: firebase.app.App, private http: HttpClient) {
     const settings = {timestampsInSnapshots: true};

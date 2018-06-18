@@ -19,6 +19,8 @@ import { appRouts } from './routers/router';
 import { CustomersPredComponent } from './content/customers-pred/customers-pred.component';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { PopularDishesComponent } from './content/popular-dishes/popular-dishes.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts';
     StockComponent,
     WarningsComponent,
     LoginComponent,
-    CustomersPredComponent
+    CustomersPredComponent,
+    NotificationsComponent,
+    PopularDishesComponent
   ],
   imports: [
     Ng2GoogleChartsModule,

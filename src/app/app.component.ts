@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   rest: Object[];
   restsObj;
   restID;
+  displayNotification: Boolean = false;
   constructor(private fb: FirebaseService) {
     this.rest = [];
     this.initRests();
@@ -44,8 +45,7 @@ export class AppComponent implements OnInit {
     }
   }
   initRests() {
-    const one = 5;
-    const t = this;
+    this.fb.hasRest = false;
     this.fb.auth.onAuthStateChanged(user => {
         if (user) {
           this.fb.fs.collection('GlobWorkers/' + this.fb.uid + '/Rest')
@@ -53,6 +53,8 @@ export class AppComponent implements OnInit {
               docs.forEach(doc => {
                 this.rest.push(doc.id);
                 this.fb.changeRestID(this.rest[0].toString());
+                this.fb.hasRest = true;
+                this.displayNotification = true;
               });
             });
         }

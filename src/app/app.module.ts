@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
+import { NavComponent } from './nav/nav.component';
 import { ContentComponent } from './content/content.component';
 import { StockComponent } from './content/stock/stock.component';
-import {Router, RouterModule, Routes, CanActivate} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import { FirebaseService } from './services/firebaseService/firebase.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -21,19 +21,23 @@ import { CustomersPredComponent } from './content/customers-pred/customers-pred.
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { PopularDishesComponent } from './content/popular-dishes/popular-dishes.component';
+import { HomeComponent } from './content/home/home.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SideNavComponent,
+    NavComponent,
     ContentComponent,
     StockComponent,
     WarningsComponent,
     LoginComponent,
     CustomersPredComponent,
     NotificationsComponent,
-    PopularDishesComponent
+    PopularDishesComponent,
+    HomeComponent,
+    TopBarComponent
   ],
   imports: [
     Ng2GoogleChartsModule,

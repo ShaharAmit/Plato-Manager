@@ -2,3 +2,10 @@ stockCont {
     width: 80%;
 }
 
+tr {
+    font-weight: 3vw;
+}
+
+td {
+    font-size: 2vw;
+}

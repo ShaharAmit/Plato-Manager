@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../services/firebaseService/firebase.service';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  FirebaseService
+} from '../../services/firebaseService/firebase.service';
 
 @Component({
   selector: 'app-popular-dishes',
@@ -11,9 +16,15 @@ export class PopularDishesComponent implements OnInit {
   pieChartDataRank2: any;
   pieChartDataRank1: any;
   restID: string;
+  mealRank: Object[];
+  allMealRank: Object;
 
   constructor(private fb: FirebaseService) {
-
+    this.mealRank = [];
+    for (let i = 0; i < 3; i++) {
+      this.mealRank[i] = {};
+    }
+    this.allMealRank = {};
   }
   ngOnInit() {
     this.init();
@@ -21,54 +32,105 @@ export class PopularDishesComponent implements OnInit {
   }
 
   async loadScatterChart() {
-    const dataTable = await this.loadData();
-    console.log(dataTable);
-    this.pieChartDataRank3 = {
-      chartType: 'PieChart',
-      dataTable: dataTable[0],
-      options: {
-        title: 'Meals top ranked',
-      },
-    };
-
-    this.pieChartDataRank2 = {
-      chartType: 'PieChart',
-      dataTable: dataTable[1],
-      options: {
-        title: 'Meals mid ranked',
-      },
-    };
-
-    this.pieChartDataRank1 = {
-      chartType: 'PieChart',
-      dataTable: dataTable[2],
-      options: {
-        title: 'Meals low ranked',
-      },
-    };
+    this.loadData();
   }
 
   async loadData() {
-    const dataTable = [];
-    dataTable[0] = [];
-    dataTable[1] = [];
-    dataTable[2] = [];
-
-    dataTable[0].push(['Meals', 'Likes']);
-    dataTable[1].push(['Meals', 'Mid Rank']);
-    dataTable[2].push(['Meals', 'Unlikes']);
-
     const ref = this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/MealsRanking');
-    await ref.get().then(docs => {
-      docs.forEach(doc => {
-        const data = doc.data();
-        dataTable[0].push([doc.id, data.Rank3]);
-        dataTable[1].push([doc.id, data.Rank2]);
-        dataTable[2].push([doc.id, data.Rank1]);
-
+    ref.get().then(async docs => {
+      const promises = [];
+      docs.forEach(async doc => {
+        if (doc && doc.data()) {
+          promises.push(this.checkRanks(ref, doc.id, 'Rank3', 0));
+          promises.push(this.checkRanks(ref, doc.id, 'Rank2', 1));
+          promises.push(this.checkRanks(ref, doc.id, 'Rank1', 2));
+        }
       });
+      Promise.all(promises).then(() => {
+        let sortable = [];
+        for (const meal in this.allMealRank) {
+          if (meal) {
+            console.log(meal);
+            sortable.push([meal, this.allMealRank[meal]]);
+          }
+        }
+
+        sortable.sort((a, b) => {
+          return b[1] - a[1];
+        });
+        sortable = sortable.slice(0, 5);
+        const first = [],
+          second = [],
+          third = [];
+        first.push(['Meals', 'Likes']);
+        for (let i = 0; i < 5; i++) {
+          if (this.mealRank[0][sortable[i][0]]) {
+            first.push([sortable[i][0], this.mealRank[0][sortable[i][0]]]);
+          } else {
+            first.push([sortable[i][0], 0]);
+          }
+        }
+
+        second.push(['Meals', 'Mid Rank']);
+        for (let i = 0; i < 5; i++) {
+          if (this.mealRank[1][sortable[i][0]]) {
+            second.push([sortable[i][0], this.mealRank[1][sortable[i][0]]]);
+          } else {
+            second.push([sortable[i][0], 0]);
+          }
+        }
+
+        third.push(['Meals', 'Unlikes']);
+        for (let i = 0; i < 5; i++) {
+          if (this.mealRank[2][sortable[i][0]]) {
+            third.push([sortable[i][0], this.mealRank[2][sortable[i][0]]]);
+          } else {
+            third.push([sortable[i][0], 0]);
+          }
+        }
+        const dataTable = [];
+        dataTable[0] = first;
+        dataTable[1] = second;
+        dataTable[2] = third;
+
+        this.pieChartDataRank3 = {
+          chartType: 'PieChart',
+          dataTable: dataTable[0],
+          options: {
+            title: 'Meals top ranked',
+          },
+        };
+
+        this.pieChartDataRank2 = {
+          chartType: 'PieChart',
+          dataTable: dataTable[1],
+          options: {
+            title: 'Meals mid ranked',
+          },
+        };
+
+        this.pieChartDataRank1 = {
+          chartType: 'PieChart',
+          dataTable: dataTable[2],
+          options: {
+            title: 'Meals low ranked',
+          },
+        };
+      }).catch(err => console.log(err));
     }).catch(err => console.log(err));
-    return dataTable;
+  }
+
+  checkRanks(ref, docID, rank, i) {
+    return ref.doc(docID).collection(rank).get().then(docs => {
+      if (docs && docs.size) {
+        this.mealRank[i][docID] = docs.size;
+        if (this.allMealRank[docID]) {
+          this.allMealRank[docID] += docs.size;
+        } else {
+          this.allMealRank[docID] = docs.size;
+        }
+      }
+    });
   }
 
   async init() {

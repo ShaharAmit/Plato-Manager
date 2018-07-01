@@ -20,12 +20,13 @@ export class StockComponent implements OnInit {
 
   async getStockAmounts() {
     const amounts: Object[] = [];
-    await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/WarehouseStock')
+    await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/WarehouseStock').where('value.alert', '>=', '0')
       .get()
       .then((docs) => {
         docs.forEach(doc => {
           const data = doc.data();
-          amounts.push({'id' : doc.id, 'amount' : data.value.amount, 'unit' : data.value.unit});
+          // tslint:disable-next-line:max-line-length
+          amounts.push({'id' : doc.id, 'amount' : data.value.amount, 'unit' : data.value.unit, 'alert': 'empty in ' + data.value.alert + ' days'});
         });
       }).catch(err => {
         console.error(err);

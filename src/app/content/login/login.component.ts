@@ -64,27 +64,28 @@ export class LoginComponent implements OnInit {
   async changeState() {
 
     if (this.fb.name && this.fb.name !== '') {
-      this.header.innerHTML = 'Welcome ' + this.fb.name;
-      for (let i = 0; i < this.formGroup.length; i++) {
-        this.formGroup[i].classList.add('hidden');
-      }
-      this.logIn.classList.add('hidden');
-      this.forgotPass.classList.add('hidden');
-      this.logoOt.classList.remove('hidden');
+      // this.header.innerHTML = 'Welcome ' + this.fb.name;
+      // for (let i = 0; i < this.formGroup.length; i++) {
+      //   this.formGroup[i].classList.add('hidden');
+      // }
+      // this.logIn.classList.add('hidden');
+      // this.forgotPass.classList.add('hidden');
+      // this.logoOt.classList.remove('hidden');
     } else {
       this.fb.auth.onAuthStateChanged(async user => {
         if (user) {
-          this.header.innerHTML = 'Welcome ';
+          // this.header.innerHTML = 'Welcome ';
           this.fb.name = await this.fb.fs.doc('GlobWorkers/' + user.uid).get().then(doc => {
             return doc.data().name;
           });
-          this.header.innerHTML = 'Welcome ' + this.fb.name;
-          for (let i = 0; i < this.formGroup.length; i++) {
-            this.formGroup[i].classList.add('hidden');
-          }
-          this.logIn.classList.add('hidden');
-          this.forgotPass.classList.add('hidden');
-          this.logoOt.classList.remove('hidden');
+          this.router.navigate(['/home']);
+          // this.header.innerHTML = 'Welcome ' + this.fb.name;
+          // for (let i = 0; i < this.formGroup.length; i++) {
+          //   this.formGroup[i].classList.add('hidden');
+          // }
+          // this.logIn.classList.add('hidden');
+          // this.forgotPass.classList.add('hidden');
+          // this.logoOt.classList.remove('hidden');
         } else {
           this.header.innerHTML = 'Welcome, please login: ';
           for (let i = 0; i < this.formGroup.length; i++) {

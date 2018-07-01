@@ -1,12 +1,11 @@
 table {
     width: 100%;
     height: auto;
-    margin: 10% 0 0 0;
 }
 
 .tableCont {
-    margin: auto;
-    width: 80%;
+    margin: 0 auto;
+    width: 90%;
 }
 
 th, td{
@@ -15,6 +14,6 @@ th, td{
 
 td:first-child {
     background-position: center;
-    background-size: 20%;
+    background-size: 50%;
     background-repeat: no-repeat;
 }

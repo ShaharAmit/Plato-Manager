@@ -20,7 +20,7 @@ export class NotificationsComponent implements OnInit {
 
   async init() {
     await this.fb.restID.subscribe(message => this.restID = message);
-    await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/Messages').orderBy('timestamp').limit(10)
+    await this.fb.fs.collection(this.fb.restRoot + '/' + this.restID + '/Messages').orderBy('timestamp').limit(5)
     .onSnapshot(docs => {
       this.notifications = [];
       docs.forEach(doc => {
@@ -34,6 +34,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   getImage (type) {
-    return 'url(' + type + ')';
+    const path = '/assets/images/' + type + '.png';
+    return 'url(' + path + ')';
   }
 }

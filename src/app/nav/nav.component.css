@@ -1,9 +1,7 @@
 #sideBar {
     width: 300px;
-    height: 100%;
-    background-color: #19212b;
-    position: absolute;
-    display: none;
+    min-height: 100vh;
+    background-color: #F5F5F5;
 }
 .menuItem {
     font-size: 1.2rem;
@@ -14,7 +12,6 @@
 }
 .menuItem a {
     display: block;
-    color: rgba(255,255,255,.7);
     padding: 5px;
     text-decoration: none;
     margin: 0 0 0 20px;    

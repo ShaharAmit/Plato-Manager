@@ -1,19 +1,21 @@
 <div class="cont">
-    <div class="logo">
-        <button class="menuButton holder hidden" (click)="display()"></button>
-        <a href="login" class="logoPic"></a>
+  <div class="topBar">
+    <div class="tabs">
+      <button class="menuButton" (click)="displayNav()" *ngIf="loggedIn"></button>
+      <button class="notfButton" (click)="displayNotf()" *ngIf="loggedIn"></button>
+      <a [routerLink]="['/home']" class="logoPic"></a>
     </div>
-    <div class="topBar">
-        <div class="restsCont holder hidden">
-            <label for="rests">restaurant</label>
-            <select id="rests" name="rests">
-                <option *ngFor="let rest of this.rest">
-                    {{rest}}
-                </option>
-            </select>
-        </div>
+    <div class="restsCont">
+      <label for="rests">restaurant</label>
+      <select id="rests" name="rests">
+        <option *ngFor="let rest of this.rest">
+          {{rest}}
+        </option>
+      </select>
     </div>
-    <app-side-nav class="holder hidden"></app-side-nav>
-    <app-notifications *ngIf="displayNotification"></app-notifications>
-    <app-content></app-content>
+  </div>
+
+  <app-nav id="nav" *ngIf="loggedIn" ng-hide="this.fb.nav"></app-nav>
+  <app-notifications id="notfi" *ngIf="loggedIn" ng-hide="this.fb.notfi"></app-notifications>
+  <app-content id="area"></app-content>
 </div>

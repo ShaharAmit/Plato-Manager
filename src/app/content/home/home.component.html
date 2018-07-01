@@ -1,0 +1,64 @@
+<div class="dryStatistics">
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Meals</div>
+    <div class="card-body">
+      <h5 class="card-title">Sales</h5>
+      <p class="card-text">{{todayOrderes}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Meals</div>
+    <div class="card-body">
+      <h5 class="card-title">Waiting</h5>
+      <p class="card-text">{{waitingToBeMade}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Meals</div>
+    <div class="card-body">
+      <h5 class="card-title">In Made</h5>
+      <p class="card-text">{{inMade}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Meals</div>
+    <div class="card-body">
+      <h5 class="card-title">Ready</h5>
+      <p class="card-text">{{ready}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Meals</div>
+    <div class="card-body">
+      <h5 class="card-title">Canceled</h5>
+      <p class="card-text">{{destroyed}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Meals</div>
+    <div class="card-body">
+      <h5 class="card-title">Most Popular</h5>
+      <p class="card-text">{{mostRankedMeal}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Customers</div>
+    <div class="card-body">
+      <h5 class="card-title">Current</h5>
+      <p class="card-text">{{sittingTables}}</p>
+    </div>
+  </div>
+  <div class="card bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">Customers</div>
+    <div class="card-body">
+      <h5 class="card-title">Daily</h5>
+      <p class="card-text">{{totalDailyCustomers}}</p>
+    </div>
+  </div>
+</div>
+
+<div>
+  <google-chart class="chart" [data]="ColumnChart1"></google-chart>
+  <google-chart class="chart" [data]="scatterChartData"></google-chart>
+
+</div>

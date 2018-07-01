@@ -1,6 +1,6 @@
 .area {
-    background-color: #ebeff1;
     min-height: 100%;
+    padding: 5px;
     margin-top: 0;
     overflow: hidden;
     clear: right;

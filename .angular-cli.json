@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "images",
         "favicon.ico",
         "firebase-messaging-sw.js",
         "manifest.json"

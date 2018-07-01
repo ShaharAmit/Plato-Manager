@@ -7,43 +7,53 @@ import { FirebaseService } from './services/firebaseService/firebase.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  rest: Object[];
-  restsObj;
-  restID;
-  displayNotification: Boolean = false;
+  loggedIn: boolean;
+  restID: string;
+  restsObj: HTMLSelectElement;
+  rest: any;
   constructor(private fb: FirebaseService) {
-    this.rest = [];
-    this.initRests();
+
   }
 
   ngOnInit() {
-    this.fb.auth.onAuthStateChanged(user => {
-      const hidden = document.getElementsByClassName('holder');
-      if (user) {
-        for (let i = 0; i < hidden.length; i++) {
-          hidden[i].classList.remove('hidden');
-        }
-      } else {
-        for (let i = 0; i < hidden.length; i++) {
-          hidden[i].classList.add('hidden');
-        }
-      }
-    });
-    const t = this;
     this.fb.restID.subscribe(message => this.restID = message);
     this.restsObj = document.getElementById('rests') as HTMLSelectElement;
-    this.restsObj.addEventListener('change', () => {
-      this.fb.changeRestID(this.restsObj.value);
-    });
+    this.restsObj.removeEventListener('change', this.changeRest());
+    this.restsObj.addEventListener('change', (this.changeRest()));
   }
-  display() {
-    const menu = document.getElementById('sideBar') as HTMLButtonElement;
-    if (menu.style.display === 'block') {
-      menu.style.display = 'none';
+
+  unDisplayMenu (element) {
+    const elem = document.getElementById(element) as HTMLButtonElement;
+      elem.style.display = 'none';
+  }
+  changeRest(): any {
+    this.rest = [];
+    this.initRests();
+    return null;
+  }
+
+  displayNav() {
+    this.unDisplayMenu('notfi');
+    const nav = document.getElementById('nav') as HTMLButtonElement;
+    if (nav.style.display === 'block') {
+      nav.style.display = 'none';
     } else {
-      menu.style.display = 'block';
+      nav.style.display = 'block';
     }
   }
+
+  displayNotf() {
+    this.unDisplayMenu('nav');
+    const notf = document.getElementById('notfi') as HTMLButtonElement;
+    if (notf.style.display === 'block') {
+      notf.style.display = 'none';
+    } else {
+      notf.style.display = 'block';
+    }
+  }
+
+
+
   initRests() {
     this.fb.hasRest = false;
     this.fb.auth.onAuthStateChanged(user => {
@@ -52,12 +62,14 @@ export class AppComponent implements OnInit {
             .get().then( docs => {
               docs.forEach(doc => {
                 this.rest.push(doc.id);
+                this.restsObj.value = doc.id;
                 this.fb.changeRestID(this.rest[0].toString());
                 this.fb.hasRest = true;
-                this.displayNotification = true;
+                this.loggedIn = true;
               });
             });
         }
     });
   }
+
 }

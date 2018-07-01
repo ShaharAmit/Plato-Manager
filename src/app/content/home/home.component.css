@@ -1,0 +1,36 @@
+.dryStatistics {
+    width: 100%;
+    text-align: center;
+}
+
+.dryStatistics > div {
+    width: 11.5%;
+    margin-left: 2px;
+    display: inline-block;
+    font-size: 1.4vw;
+}
+
+.dryStatistics > div > div > h5 {
+    font-size: 1.2vw;
+}
+
+.dryStatistics > div > div > p {
+    font-size: 1vw;
+}
+
+.card-body {
+    padding: 5px;
+}
+
+.card-title {
+    margin-bottom: 2.5px;
+}
+
+.card-header {
+    padding: 2px;
+}
+.chart {
+    width: 100% !important;
+    height: 22vw !important;
+    display: inline-block !important;
+}
